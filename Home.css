@@ -21,9 +21,10 @@
 
 .u-section-1 .u-image-1 {
   object-position: 100% 50%;
-  height: 590px;
-  width: 590px;
+  height: 500px;
+  width: 500px;
   margin: 0 auto;
+  margin-left: 50px;
 }
 
 .u-section-1 .u-layout-cell-2 {
