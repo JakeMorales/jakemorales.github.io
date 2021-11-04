@@ -950,12 +950,14 @@
   margin: 40px 0 0;
 }
 
-.u-section-4 .u-social-icons-1 {
-  height: 24px;
-  min-height: 16px;
+.u-social-icons-1 {
+  padding-top: 30px;
+  height: 100px;
+  min-height: 24px;
   width: 125px;
   min-width: 94px;
-  margin: 20px auto 0 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .u-section-4 .u-icon-5 {
@@ -990,7 +992,7 @@
     margin-right: 0;
   }
 
-  .u-section-4 .u-social-icons-1 {
+.u-social-icons-1 {
     width: 126px;
     margin-left: -1px;
   }
