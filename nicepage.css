@@ -22850,7 +22850,7 @@ a.u-link.u-hover-palette-2-light-1:hover {
 .u-container-layout.u-palette-2-light-2:before,
 .u-table-alt-palette-2-light-2 tr:nth-child(even) {
   color: #111111;
-  background-color: #f1b5b8;
+  background-color: #656d82;
 }
 .u-button-style.u-palette-2-light-2,
 .u-button-style.u-palette-2-light-2[class*="u-border-"] {
@@ -32689,7 +32689,7 @@ a.u-link.u-text-hover-palette-4-light-3:hover {
 .u-text-palette-4-base,
 a.u-button-style.u-text-palette-4-base,
 a.u-button-style.u-text-palette-4-base[class*="u-border-"] {
-  color: #2cccc4 !important;
+  color: #000000 !important;
 }
 a.u-button-style.u-text-palette-4-base:hover,
 a.u-button-style.u-text-palette-4-base[class*="u-border-"]:hover,
@@ -32728,7 +32728,7 @@ a.u-button-style.u-button-style.active > .u-text-active-palette-4-base[class*="u
 .u-button-style:hover > .u-text-hover-palette-4-base .u-svg-link,
 .u-button-style.u-button-style.active > .u-text-active-palette-4-base .u-svg-link,
 .u-text-hover-palette-4-base:focus .u-svg-link {
-  fill: #2cccc4;
+  fill: #000000;
 }
 .u-link.u-text-palette-4-base:hover {
   color: #28b8b0 !important;
