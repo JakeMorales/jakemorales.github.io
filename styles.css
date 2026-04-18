@@ -66,7 +66,9 @@ header, section, footer { color: var(--cream); }
 
 /* ── Hero ── */
 .hero {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  min-height: 100vh;
+  min-height: 100svh; /* svh excludes mobile browser chrome so orb is never clipped */
+  display: flex; align-items: center; justify-content: center;
   padding: 0; background: transparent;
   position: sticky; top: 0; z-index: 1;
 }
@@ -95,14 +97,30 @@ header, section, footer { color: var(--cream); }
 .icon-btn:hover { background: var(--accent); color: var(--card); }
 .icon-btn:hover svg { fill: var(--card); }
 
+/* Tablet / narrow landscape: two columns but scaled so everything fits in one viewport height */
+@media (min-width: 641px) and (max-width: 980px) {
+  .hero-inner { padding: 32px 4vw; gap: 20px; }
+  .hero h1 { font-size: clamp(2rem, 4vw, 3.75rem); }
+  .hero .role { font-size: clamp(0.85rem, 1.4vw, 1.35rem); }
+  #orb-canvas { width: min(100%, 360px, 42svh); }
+}
+
 @media (max-width: 640px) {
   .hero { align-items: center; text-align: center; }
-  .hero-inner { grid-template-columns: 1fr; padding: 32px 16px; gap: 8px; }
-  .hero-left { align-items: center; text-align: center; }
-  .hero-right { display: flex; min-height: 0; }
-  #orb-canvas { width: min(72vw, 260px); opacity: 0.52; }
-  .hero h1 { font-size: 3rem; }
-  .hero .about { font-size: 1rem; }
+  .hero-inner { grid-template-columns: 1fr; padding: 20px 16px 16px; gap: 4px; }
+  .hero-left { align-items: center; text-align: center; gap: 6px; }
+  .hero-right { display: flex; min-height: 0; justify-content: center; padding-right: 0; }
+  #orb-canvas { width: min(64vw, 220px, 32svh); }
+  .hero h1 { font-size: 2.4rem; }
+  .hero .welcome { display: none; }            /* reclaim ~28px */
+  .hero .role { font-size: 0.95rem; }
+  .hero .about {
+    font-size: 0.9rem; margin-top: 4px;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden;                           /* 3 lines ≈ 60px instead of ~130px */
+  }
+  .hero-links { margin-top: 8px; gap: 10px; }
+  .icon-btn { width: 38px; height: 38px; }
 }
 
 /* Ensure sections after hero start below the fold */
@@ -151,7 +169,9 @@ footer { opacity: 0.9; }
 .content-panel { position: relative; z-index: 2; background: var(--bg); border-radius: 16px 16px 0 0; box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.55); }
 
 /* ── Glow orb (WebGL canvas in hero-right) ── */
-#orb-canvas { width: min(100%, 460px); aspect-ratio: 1; display: block; }
+/* Canvas must never be taller than the viewport — max-height with aspect-ratio
+   constrains both dimensions so the orb stays fully on-screen in landscape. */
+#orb-canvas { width: min(100%, 460px, 46svh); aspect-ratio: 1; display: block; }
 .orb-fallback {
   width: 180px; height: 180px; margin: auto; border-radius: 50%;
   background: radial-gradient(circle, rgba(100, 181, 246, 0.3), rgba(120, 80, 220, 0.08) 60%, transparent 72%);
