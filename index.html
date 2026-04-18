@@ -6,6 +6,8 @@
   <title>About — Jake Morales</title>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <!-- Devicons font for tech icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@master/devicon.min.css">
   <style>
     :root{
       --bg:#0f1114; /* blackish gray */
@@ -14,14 +16,29 @@
       --muted:#bdb6a9;
     }
     body,h1,h2{font-family: "Raleway",sans-serif}
-    html,body{background:var(--bg);color:var(--cream)}
+    html,body{background:var(--bg);color:var(--cream);height:100%}
+    body{margin:0}
     main{max-width:900px;margin:40px auto;padding:0 16px;background:var(--card);color:var(--cream)}
     a{color:var(--cream)}
     .w3-text-grey{color:var(--muted)!important}
+    /* Ensure W3.CSS utility classes don't force light backgrounds */
+    .w3-light-grey, .w3-white { background: var(--card) !important; color: var(--cream) !important; }
+    /* Ensure page background class also matches dark theme */
+    body.w3-light-grey { background: var(--bg) !important; }
+    .w3-card-4 { box-shadow: 0 8px 30px rgba(0,0,0,0.6) !important; }
+    header, section, footer { color: var(--cream); }
     /* Buttons: subtle outline or cream-filled primary */
     .w3-button.w3-white{background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,0.08)}
     .w3-button.w3-black{background:var(--cream);color:var(--bg)}
     .w3-button.w3-border{border-color:rgba(255,255,255,0.08)}
+
+    /* Tech cards grid */
+    .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:12px}
+    .tech-card{background:rgba(255,255,255,0.03);border-radius:10px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .18s ease, box-shadow .18s ease;border:1px solid rgba(255,255,255,0.03)}
+    .tech-card:hover{transform:scale(1.06);box-shadow:0 10px 30px rgba(0,0,0,0.6);border-color:rgba(255,255,255,0.06)}
+    .tech-card img{height:44px;margin-bottom:10px;filter:grayscale(1) brightness(1.2) invert(1) sepia(0.15) saturate(0.1);opacity:0.98}
+    .tech-card i{font-size:44px;margin-bottom:10px;color:var(--cream);display:block}
+    .tech-card p{margin:0;font-weight:600;font-size:0.95rem;color:var(--cream)}
   </style>
 </head>
 <body class="w3-light-grey">
@@ -38,12 +55,23 @@
   </section>
 
   <section class="w3-container w3-margin-top">
-    <h2>Skills & Tools</h2>
-    <p><strong>Languages:</strong> C#, C/C++, Python, Java, TypeScript, JavaScript, SQL, Ruby</p>
-    <p><strong>Frameworks / Libraries:</strong> Angular, React/Next.js, Node.js, ASP.NET, Blazor</p>
-    <p><strong>Databases & Cloud:</strong> Microsoft SQL Server, Azure (Logic Apps, Service Bus), Azure Maps</p>
-    <p><strong>Dev Tools:</strong> Visual Studio, VS Code, Git/GitHub, CI/CD, Postman, Docker</p>
-    <p><strong>Other:</strong> System design, Agile, unit testing (xUnit), Unity, bash scripting</p>
+    <h2>Skills & Technologies</h2>
+    <div class="tech-grid">
+      <div class="tech-card"><i class="devicon-csharp-plain"></i><p>C#</p></div>
+      <div class="tech-card"><i class="devicon-cplusplus-plain"></i><p>C/C++</p></div>
+      <div class="tech-card"><i class="devicon-python-plain"></i><p>Python</p></div>
+      <div class="tech-card"><i class="devicon-java-plain"></i><p>Java</p></div>
+      <div class="tech-card"><i class="devicon-typescript-plain"></i><p>TypeScript</p></div>
+      <div class="tech-card"><i class="devicon-javascript-plain"></i><p>JavaScript</p></div>
+      <div class="tech-card"><i class="devicon-angularjs-plain"></i><p>Angular</p></div>
+      <div class="tech-card"><i class="devicon-react-original"></i><p>React / Next.js</p></div>
+      <div class="tech-card"><i class="devicon-nodejs-plain"></i><p>Node.js</p></div>
+      <div class="tech-card"><i class="devicon-microsoftsqlserver-plain"></i><p>SQL Server</p></div>
+      <div class="tech-card"><i class="devicon-azure-plain"></i><p>Azure</p></div>
+      <div class="tech-card"><i class="devicon-docker-plain"></i><p>Docker</p></div>
+      <div class="tech-card"><i class="devicon-git-plain"></i><p>Git</p></div>
+      <div class="tech-card"><i class="devicon-unity-plain"></i><p>Unity</p></div>
+    </div>
   </section>
 
   <section class="w3-container w3-margin-top">
