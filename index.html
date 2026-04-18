@@ -78,7 +78,32 @@
     header + section{padding-top:24px}
 
     /* Section heading */
-    h2{color:var(--cream);font-weight:600;margin-bottom:12px}
+    h2{color:var(--cream);font-weight:700;margin-bottom:12px;font-size:1.15rem;letter-spacing:-0.01em}
+
+    /* Apple HIG inspired section styles */
+    .section-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid var(--frame-stroke);
+      border-radius: 12px;
+      padding: 28px;
+      margin: 28px 0;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+    }
+
+    .section-divider {
+      border-top: 1px solid rgba(242,242,243,0.04);
+      padding-top: 28px;
+      margin-top: 28px;
+    }
+
+    .section-label {
+      display: inline-block;
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
 
     /* Footer */
     footer{opacity:0.9}
@@ -87,6 +112,19 @@
     .page-frame{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
     .page-frame .frame-rect{fill:none;stroke:var(--frame-stroke);stroke-width:0.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:400;stroke-dashoffset:400;animation:frame-draw 1.6s cubic-bezier(.2,.8,.2,1) .12s forwards}
     @keyframes frame-draw{to{stroke-dashoffset:0}}
+
+    /* Frosted bars outside the page border (top/left/right/bottom)
+       Uses viewport-relative sizes so the central hole aligns with the SVG frame */
+    .edge-frost{position:fixed;inset:0;pointer-events:none;z-index:9998}
+    .edge-frost > div{position:absolute;background:rgba(11,11,13,0.45);backdrop-filter:blur(10px) saturate(115%);-webkit-backdrop-filter:blur(10px) saturate(115%)}
+    /* top bar: full width, 3% of viewport height */
+    .edge-top{left:0;right:0;top:0;height:3vh}
+    /* bottom bar: full width, 3% of viewport height */
+    .edge-bottom{left:0;right:0;bottom:0;height:3vh}
+    /* left bar: between top and bottom, 3% of viewport width */
+    .edge-left{left:0;top:3vh;bottom:3vh;width:3vw}
+    /* right bar: between top and bottom, 1% of viewport width (frame inner rect ends at ~99) */
+    .edge-right{right:0;top:3vh;bottom:3vh;width:1vw}
 
     /* Fade content in after border animation completes */
     .fade-in{opacity:0;animation:fadeIn .45s ease forwards .9s}
@@ -107,7 +145,7 @@
         <h1>Hi, I'm Jake Morales</h1>
         <p class="role">Software Engineer</p>
         <div class="about">
-          <p>A motivated software engineer with 5+ years of experience building reliable, data-driven web platforms. I enjoy solving hard problems, improving user experiences, and shipping maintainable systems — from API design to front-end components. Outside work I build projects around gaming and matchmaking systems.</p>
+          <p>A motivated software engineer with years of experience building reliable, data-driven web platforms. I enjoy solving hard problems, improving user experiences, and shipping maintainable systems — from API design to front-end components.</p>
         </div>
         <div class="hero-links" aria-label="Quick links">
           <a class="icon-btn" href="https://github.com/JakeMorales" target="_blank" rel="noopener" aria-label="GitHub">
@@ -129,8 +167,48 @@
 
   <div class="content-panel fade-in">
   <div class="site-body">
-  <section class="w3-container w3-margin-top">
-    <h2>Skills & Technologies</h2>
+  
+    <section class="w3-container w3-margin-top section-card">
+    <span class="section-label">About me</span>
+    <p>I’ve always been drawn to the way things look, feel, and flow on a screen. Long before I studied computer science, I was the kid who spent hours reskinning apps like TeamSpeak, swapping out CSS, tweaking layouts, and learning how small visual changes could completely shift the experience. That early curiosity eventually grew into a degree, where my senior research thesis centered on data visualization in modern browsers, exploring how design can make complex information feel clear and engaging. What followed has been a career in software engineering, where I’ve worked as a full‑stack developer with a growing passion for UI and UX design.
+Outside of tech, I love camping, hiking, and gaming — the kinds of experiences that remind me how important it is for digital products to feel intuitive, inviting, and human. That perspective shapes the way I build: I’m drawn to modern, clean, mobile‑friendly interfaces that guide attention, encourage interaction, and stay accessible to everyone.
+</p>
+    <h2>Design Influences</h2>
+    <p>I draw from product and editorial design leaders; below are the specific qualities I take from each and how they shape my approach.</p>
+    <ul>
+      <li><strong>Apple:</strong> System-driven clarity and refined motion. I favor clear hierarchy, typographic precision, and subtle transitions that communicate purpose and affordance. <a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank" rel="noopener">Apple HIG</a></li>
+      <li><strong>Spotify:</strong> Product-led empathy and expressive micro-interactions. I prioritize rhythm, discoverability, and personality in interfaces while keeping usability central. <a href="https://spotify.design/" target="_blank" rel="noopener">Spotify Design</a></li>
+      <li><strong>Oura:</strong> Minimalism and a calm, premium feel. I reduce visual noise, emphasize breathing room, and use restraint to communicate value and calm focus. <a href="https://ouraring.com/blog/horizon-design" target="_blank" rel="noopener">Oura — Horizon</a></li>
+      <li><strong>Stripe:</strong> Interactive clarity and modular UI. I design components that are composable, predictable, and explicit about state—making complex flows feel straightforward. <a href="https://stripe.com/docs/elements" target="_blank" rel="noopener">Stripe Elements</a>, <a href="https://stripe.com/blog/tags/design" target="_blank" rel="noopener">Stripe Design</a></li>
+      <li><strong>Linear:</strong> Dark, precise productivity aesthetics. I take cues for focused surfaces, concise information density, and tooling that feels fast and deterministic. <a href="https://linear.app/blog/design" target="_blank" rel="noopener">Linear — Design</a>, <a href="https://linear.app/blog/linear-2022" target="_blank" rel="noopener">Linear 2022</a></li>
+      <li><strong>New York Times:</strong> Editorial clarity and narrative flow. I structure content with clear hierarchy and rhythm so users can scan, consume, and retain information efficiently. <a href="https://open.nytimes.com/" target="_blank" rel="noopener">NYT Open</a>, <a href="https://open.nytimes.com/designing-at-the-speed-of-news-figma-config-2023-9b0c2f3c8b8e" target="_blank" rel="noopener">Designing at the Speed of News</a></li>
+      <li><strong>Vox Media:</strong> Bold visual storytelling and data-driven presentations. I apply striking visuals and clear data layouts to support stories without sacrificing legibility. <a href="https://product.voxmedia.com/" target="_blank" rel="noopener">Vox Product</a>, <a href="https://www.vox.com/features" target="_blank" rel="noopener">Vox Features</a></li>
+    </ul>
+  </section>
+
+  <section class="w3-container w3-margin-top section-card">
+    <span class="section-label">Work</span>
+    <h2>Selected Projects</h2>
+    <div class="project">
+      <h3>VesaWeb</h3>
+      <p>VesaWeb is a modern web platform for the Virtual Esports Association, a competitive Apex Legends league and scrim server. Built with Angular 18, it provides real-time player statistics, match history, and league standings.</p>
+    </div>
+    <div class="project">
+      <h3>ScrimBot (Newt)</h3>
+      <p>ScrimBot (Newt) is a Discord bot for managing scrims and league operations, created with VESA Apex workflows in mind to automate scheduling, team assignments, and match reporting.</p>
+    </div>
+    <div class="project">
+      <h3>SpotifyRedux</h3>
+      <p>SpotifyRedux is an amateur Angular reimagining of Juxtopposed's Spotify redesign—an exploratory project focused on UI recreation and interaction patterns.</p>
+    </div>
+    <div class="project">
+      <h3>Elo Matchmaking System</h3>
+      <p><strong>Elo Matchmaking System</strong> — custom ELO algorithm using Apex Legends public APIs, with a React frontend for competitive matchmaking.</p>
+    </div>
+  </section>
+
+  <section class="w3-container w3-margin-top section-card">
+    <span class="section-label">Technologies</span>
     <div class="tech-wrap">
       <div class="tech-grid">
       <div class="tech-card"><i class="devicon-csharp-plain"></i><p>C#</p></div>
@@ -152,47 +230,17 @@
     </div>
   </section>
 
-  <section class="w3-container w3-margin-top">
-    <h2>Selected Projects</h2>
-    <div class="project">
-      <h3>VesaWeb</h3>
-      <p>VesaWeb is a modern web platform for the Virtual Esports Association, a competitive Apex Legends league and scrim server. Built with Angular 18, it provides real-time player statistics, match history, and league standings.</p>
-    </div>
-    <div class="project">
-      <h3>ScrimBot (Newt)</h3>
-      <p>ScrimBot (Newt) is a Discord bot for managing scrims and league operations, created with VESA Apex workflows in mind to automate scheduling, team assignments, and match reporting.</p>
-    </div>
-    <div class="project">
-      <h3>SpotifyRedux</h3>
-      <p>SpotifyRedux is an amateur Angular reimagining of Juxtopposed's Spotify redesign—an exploratory project focused on UI recreation and interaction patterns.</p>
-    </div>
-    <div class="project">
-      <h3>Elo Matchmaking System</h3>
-      <p><strong>Elo Matchmaking System</strong> — custom ELO algorithm using Apex Legends public APIs, with a React frontend for competitive matchmaking.</p>
-    </div>
-  </section>
-
-  <section class="w3-container w3-margin-top">
-    <h2>Design Influences</h2>
-    <p>I draw from product and editorial design leaders; below are the specific qualities I take from each and how they shape my approach.</p>
-    <ul>
-      <li><strong>Apple:</strong> System-driven clarity and refined motion. I favor clear hierarchy, typographic precision, and subtle transitions that communicate purpose and affordance. <a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank" rel="noopener">Apple HIG</a></li>
-      <li><strong>Spotify:</strong> Product-led empathy and expressive micro-interactions. I prioritize rhythm, discoverability, and personality in interfaces while keeping usability central. <a href="https://spotify.design/" target="_blank" rel="noopener">Spotify Design</a></li>
-      <li><strong>Oura:</strong> Minimalism and a calm, premium feel. I reduce visual noise, emphasize breathing room, and use restraint to communicate value and calm focus. <a href="https://ouraring.com/blog/horizon-design" target="_blank" rel="noopener">Oura — Horizon</a></li>
-      <li><strong>Stripe:</strong> Interactive clarity and modular UI. I design components that are composable, predictable, and explicit about state—making complex flows feel straightforward. <a href="https://stripe.com/docs/elements" target="_blank" rel="noopener">Stripe Elements</a>, <a href="https://stripe.com/blog/tags/design" target="_blank" rel="noopener">Stripe Design</a></li>
-      <li><strong>Linear:</strong> Dark, precise productivity aesthetics. I take cues for focused surfaces, concise information density, and tooling that feels fast and deterministic. <a href="https://linear.app/blog/design" target="_blank" rel="noopener">Linear — Design</a>, <a href="https://linear.app/blog/linear-2022" target="_blank" rel="noopener">Linear 2022</a></li>
-      <li><strong>New York Times:</strong> Editorial clarity and narrative flow. I structure content with clear hierarchy and rhythm so users can scan, consume, and retain information efficiently. <a href="https://open.nytimes.com/" target="_blank" rel="noopener">NYT Open</a>, <a href="https://open.nytimes.com/designing-at-the-speed-of-news-figma-config-2023-9b0c2f3c8b8e" target="_blank" rel="noopener">Designing at the Speed of News</a></li>
-      <li><strong>Vox Media:</strong> Bold visual storytelling and data-driven presentations. I apply striking visuals and clear data layouts to support stories without sacrificing legibility. <a href="https://product.voxmedia.com/" target="_blank" rel="noopener">Vox Product</a>, <a href="https://www.vox.com/features" target="_blank" rel="noopener">Vox Features</a></li>
-    </ul>
-  </section>
-
-
-
   </div>
   </div>
 </main>
 
   <!-- Animated page border overlay -->
+  <div class="edge-frost" aria-hidden="true">
+    <div class="edge-top"></div>
+    <div class="edge-left"></div>
+    <div class="edge-right"></div>
+    <div class="edge-bottom"></div>
+  </div>
   <svg class="page-frame" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
     <rect class="frame-rect" x="3" y="3" width="96" height="94" rx="3" ry="3"/>
   </svg>
