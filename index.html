@@ -6,7 +6,23 @@
   <title>About — Jake Morales</title>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-  <style>body,h1,h2{font-family: "Raleway",sans-serif} main{max-width:900px;margin:40px auto;padding:0 16px}</style>
+  <style>
+    :root{
+      --bg:#0f1114; /* blackish gray */
+      --card:#111316; /* slightly lighter card */
+      --cream:#f5f1e6; /* off-white / cream */
+      --muted:#bdb6a9;
+    }
+    body,h1,h2{font-family: "Raleway",sans-serif}
+    html,body{background:var(--bg);color:var(--cream)}
+    main{max-width:900px;margin:40px auto;padding:0 16px;background:var(--card);color:var(--cream)}
+    a{color:var(--cream)}
+    .w3-text-grey{color:var(--muted)!important}
+    /* Buttons: subtle outline or cream-filled primary */
+    .w3-button.w3-white{background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,0.08)}
+    .w3-button.w3-black{background:var(--cream);color:var(--bg)}
+    .w3-button.w3-border{border-color:rgba(255,255,255,0.08)}
+  </style>
 </head>
 <body class="w3-light-grey">
 
