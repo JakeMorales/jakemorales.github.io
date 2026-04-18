@@ -44,11 +44,12 @@
     .tech-grid{ -ms-overflow-style:none; scrollbar-width:none }
     .tech-fade{position:absolute;right:0;top:0;bottom:0;width:84px;pointer-events:none;background:linear-gradient(90deg, rgba(11,11,13,0) 0%, var(--bg) 100%);opacity:0;transition:opacity .18s ease}
     .tech-fade.visible{opacity:1}
+    .tech-spacer{flex:0 0 12px}
     .tech-card{flex:0 0 auto;width:88px;background:rgba(255,255,255,0.02);border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:transform .14s ease, box-shadow .14s ease;border:1px solid rgba(242,242,243,0.03)}
     .tech-card:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(2,6,23,0.45);border-color:rgba(242,242,243,0.06)}
     .tech-card img{height:34px;width:34px;margin:0;filter:grayscale(1) brightness(1.2) invert(1) sepia(0.15) saturate(0.1);opacity:0.98}
     .tech-card i{font-size:28px;margin:0;color:var(--cream);display:block;line-height:1}
-    .tech-card p{display:block;margin:0;margin-top:6px;font-weight:600;font-size:0.78rem;color:var(--cream);text-align:center}
+    .tech-card p{display:block;margin:0;margin-top:6px;font-weight:600;font-size:0.78rem;color:var(--cream);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;line-height:1}
     /* Hero (two-column layout): left content + right animation area. Stacks on small screens */
     .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:0;background:transparent}
     .hero-inner{width:100%;max-width:1200px;padding:48px 6vw;display:grid;grid-template-columns:min(720px,58%) 1fr;gap:32px;align-items:center}
@@ -134,7 +135,7 @@
       <div class="tech-card"><i class="devicon-typescript-plain"></i><p>TypeScript</p></div>
       <div class="tech-card"><i class="devicon-javascript-plain"></i><p>JavaScript</p></div>
       <div class="tech-card"><i class="devicon-angularjs-plain"></i><p>Angular</p></div>
-      <div class="tech-card"><i class="devicon-react-original"></i><p>React / Next.js</p></div>
+      <div class="tech-card"><i class="devicon-react-original"></i><p>React</p></div>
       <div class="tech-card"><i class="devicon-nodejs-plain"></i><p>Node.js</p></div>
       <div class="tech-card"><i class="devicon-microsoftsqlserver-plain"></i><p>SQL Server</p></div>
       <div class="tech-card"><i class="devicon-azure-plain"></i><p>Azure</p></div>
@@ -196,6 +197,7 @@
           const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
           const pct = x / rect.width;
           const max = Math.max(0, grid.scrollWidth - grid.clientWidth);
+          // map mouse position to scroll target smoothly (no hard snapping)
           target = Math.round(max * pct);
           if(!rafId) rafId = requestAnimationFrame(step);
         });
