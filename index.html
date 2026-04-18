@@ -10,16 +10,21 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@master/devicon.min.css">
   <style>
     :root{
-      --bg:#0f1114; /* blackish gray */
-      --card:#111316; /* slightly lighter card */
-      --cream:#f5f1e6; /* off-white / cream */
-      --muted:#bdb6a9;
+      --bg:#0B0B0D; /* macOS slate background */
+      --card:#111215; /* elevated surface */
+      --cream:#F2F2F3; /* primary text */
+      --muted:#9CA3AA; /* secondary text */
+      --accent:#64B5F6; /* soft blue accent */
+      --frame-stroke: rgba(242,242,243,0.08);
     }
-    body,h1,h2{font-family: "Raleway",sans-serif}
+    body,h1,h2{font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif}
     html,body{background:var(--bg);color:var(--cream);height:100%}
     body{margin:0}
-    main{max-width:900px;margin:40px auto;padding:0 16px;background:var(--card);color:var(--cream)}
-    a{color:var(--cream)}
+    main{max-width:none;margin:0;padding:0;background:transparent;color:var(--cream);box-shadow:none}
+    /* Container matching hero width/padding so content aligns with hero-left */
+    .site-body{width:100%;max-width:1200px;margin:0 auto;padding:0 6vw 40px}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
     .w3-text-grey{color:var(--muted)!important}
     /* Ensure W3.CSS utility classes don't force light backgrounds */
     .w3-light-grey, .w3-white { background: var(--card) !important; color: var(--cream) !important; }
@@ -28,35 +33,100 @@
     .w3-card-4 { box-shadow: 0 8px 30px rgba(0,0,0,0.6) !important; }
     header, section, footer { color: var(--cream); }
     /* Buttons: subtle outline or cream-filled primary */
-    .w3-button.w3-white{background:transparent;color:var(--cream);border:1px solid rgba(255,255,255,0.08)}
-    .w3-button.w3-black{background:var(--cream);color:var(--bg)}
-    .w3-button.w3-border{border-color:rgba(255,255,255,0.08)}
+    .w3-button.w3-white{background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.04)}
+    .w3-button.w3-black{background:var(--accent);color:var(--card)}
+    .w3-button.w3-border{border-color:rgba(255,255,255,0.04)}
 
-    /* Tech cards grid */
-    .tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:12px}
-    .tech-card{background:rgba(255,255,255,0.03);border-radius:10px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .18s ease, box-shadow .18s ease;border:1px solid rgba(255,255,255,0.03)}
-    .tech-card:hover{transform:scale(1.06);box-shadow:0 10px 30px rgba(0,0,0,0.6);border-color:rgba(255,255,255,0.06)}
-    .tech-card img{height:44px;margin-bottom:10px;filter:grayscale(1) brightness(1.2) invert(1) sepia(0.15) saturate(0.1);opacity:0.98}
-    .tech-card i{font-size:44px;margin-bottom:10px;color:var(--cream);display:block}
-    .tech-card p{margin:0;font-weight:600;font-size:0.95rem;color:var(--cream)}
+    /* Tech cards: compact single horizontal row with right fade and mouse-driven scroll */
+    .tech-wrap{position:relative}
+    .tech-grid{display:flex;flex-wrap:nowrap;gap:12px;margin-top:12px;align-items:center;justify-content:flex-start;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+    .tech-grid::-webkit-scrollbar{display:none}
+    .tech-grid{ -ms-overflow-style:none; scrollbar-width:none }
+    .tech-fade{position:absolute;right:0;top:0;bottom:0;width:84px;pointer-events:none;background:linear-gradient(90deg, rgba(11,11,13,0) 0%, var(--bg) 100%);opacity:0;transition:opacity .18s ease}
+    .tech-fade.visible{opacity:1}
+    .tech-card{flex:0 0 auto;width:88px;background:rgba(255,255,255,0.02);border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:transform .14s ease, box-shadow .14s ease;border:1px solid rgba(242,242,243,0.03)}
+    .tech-card:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(2,6,23,0.45);border-color:rgba(242,242,243,0.06)}
+    .tech-card img{height:34px;width:34px;margin:0;filter:grayscale(1) brightness(1.2) invert(1) sepia(0.15) saturate(0.1);opacity:0.98}
+    .tech-card i{font-size:28px;margin:0;color:var(--cream);display:block;line-height:1}
+    .tech-card p{display:block;margin:0;margin-top:6px;font-weight:600;font-size:0.78rem;color:var(--cream);text-align:center}
+    /* Hero (two-column layout): left content + right animation area. Stacks on small screens */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:0;background:transparent}
+    .hero-inner{width:100%;max-width:1200px;padding:48px 6vw;display:grid;grid-template-columns:min(720px,58%) 1fr;gap:32px;align-items:center}
+    .hero-left{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;gap:12px}
+    .hero-right{display:flex;align-items:center;justify-content:center;min-height:320px}
+    .hero h1{font-size:3.75rem;margin:0}
+    .hero .welcome{font-size:1rem;margin:0;color:var(--cream);opacity:0.95}
+    .hero .role{font-size:calc(3.75rem * 0.36);margin:0;color:var(--muted);max-width:820px}
+    .hero .about{margin-top:0.8rem;color:var(--cream);max-width:820px;font-size:1.05rem;line-height:1.5}
+
+    /* Hero links (GitHub / LinkedIn / Resume) */
+    .hero-links{display:flex;gap:12px;margin-top:18px}
+    .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);color:var(--cream);text-decoration:none;transition:background .18s ease,color .18s ease}
+    .icon-btn svg{width:20px;height:20px;display:block;fill:var(--cream)}
+    .icon-btn:hover{background:var(--accent);color:var(--card)}
+    .icon-btn:hover svg{fill:var(--card)}
+
+    @media (max-width:640px){
+      .hero{align-items:center;text-align:center}
+      .hero-inner{grid-template-columns:1fr;padding:32px 16px}
+      .hero-left{align-items:center;text-align:center}
+      .hero h1{font-size:3rem}
+      .hero .about{font-size:1rem}
+    }
+    /* Ensure sections after hero start below the fold */
+    header + section{padding-top:24px}
+
+    /* Section heading */
+    h2{color:var(--cream);font-weight:600;margin-bottom:12px}
+
+    /* Footer */
+    footer{opacity:0.9}
+
+    /* Animated page-frame overlay */
+    .page-frame{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+    .page-frame .frame-rect{fill:none;stroke:var(--frame-stroke);stroke-width:0.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:400;stroke-dashoffset:400;animation:frame-draw 1.6s cubic-bezier(.2,.8,.2,1) .12s forwards}
+    @keyframes frame-draw{to{stroke-dashoffset:0}}
+
+    /* Fade content in after border animation completes */
+    .fade-in{opacity:0;animation:fadeIn .45s ease forwards .9s}
+    @keyframes fadeIn{to{opacity:1}}
   </style>
 </head>
 <body class="w3-light-grey">
 
-<main class="w3-white w3-card-4 w3-padding-24">
-  <header class="w3-container">
-    <h1>Jake Morales</h1>
-    <p class="w3-text-grey">Software Engineer</p>
+<main>
+  <header class="hero">
+    <div class="hero-inner fade-in">
+      <div class="hero-left">
+        <p class="welcome">Welcome to my website</p>
+        <h1>Hi, I'm Jake Morales</h1>
+        <p class="role">Software Engineer</p>
+        <div class="about">
+          <p>A motivated software engineer with 5+ years of experience building reliable, data-driven web platforms. I enjoy solving hard problems, improving user experiences, and shipping maintainable systems — from API design to front-end components. Outside work I build projects around gaming and matchmaking systems.</p>
+        </div>
+        <div class="hero-links" aria-label="Quick links">
+          <a class="icon-btn" href="https://github.com/JakeMorales" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .296a12 12 0 00-3.793 23.41c.6.11.82-.26.82-.577 0-.285-.01-1.04-.016-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.083-.73.083-.73 1.205.086 1.84 1.238 1.84 1.238 1.07 1.835 2.807 1.305 3.492.998.108-.775.42-1.305.762-1.605-2.665-.303-5.466-1.333-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.124-.303-.536-1.523.117-3.176 0 0 1.008-.323 3.301 1.23a11.49 11.49 0 016.006 0c2.29-1.553 3.297-1.23 3.297-1.23.655 1.653.244 2.873.12 3.176.77.84 1.235 1.91 1.235 3.22 0 4.61-2.803 5.624-5.475 5.92.432.372.816 1.103.816 2.222 0 1.604-.015 2.897-.015 3.293 0 .32.216.694.825.576A12 12 0 0012 .296z"/></svg>
+          </a>
+          <a class="icon-btn" href="https://www.linkedin.com/in/jakeamorales" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.028-3.036-1.849-3.036-1.851 0-2.134 1.445-2.134 2.939v5.666H9.355V9h3.414v1.561h.049c.476-.9 1.637-1.849 3.369-1.849 3.602 0 4.267 2.371 4.267 5.457v6.283zM5.337 7.433a2.062 2.062 0 110-4.125 2.062 2.062 0 010 4.125zM6.843 20.452H3.834V9h3.01v11.452z"/></svg>
+          </a>
+          <a class="icon-btn" href="Jake Morales - Software Engineer.pdf" target="_blank" rel="noopener" aria-label="Resume PDF">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h7l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm7 1.5V8h4.5L13 3.5zM8 12h8v1H8v-1zm0 3h8v1H8v-1z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-right" aria-hidden="true">
+        <!-- Placeholder for animation / illustration. Leave empty or add later. -->
+      </div>
+    </div>
   </header>
 
-  <section class="w3-container w3-margin-top">
-    <h2>About</h2>
-    <p>A motivated software engineer with 5+ years of experience building reliable, data-driven web platforms. I enjoy solving hard problems, improving user experiences, and shipping maintainable systems — from API design to front-end components. Outside work I build projects around gaming and matchmaking systems.</p>
-  </section>
-
+  <div class="site-body fade-in">
   <section class="w3-container w3-margin-top">
     <h2>Skills & Technologies</h2>
-    <div class="tech-grid">
+    <div class="tech-wrap">
+      <div class="tech-grid">
       <div class="tech-card"><i class="devicon-csharp-plain"></i><p>C#</p></div>
       <div class="tech-card"><i class="devicon-cplusplus-plain"></i><p>C/C++</p></div>
       <div class="tech-card"><i class="devicon-python-plain"></i><p>Python</p></div>
@@ -71,23 +141,76 @@
       <div class="tech-card"><i class="devicon-docker-plain"></i><p>Docker</p></div>
       <div class="tech-card"><i class="devicon-git-plain"></i><p>Git</p></div>
       <div class="tech-card"><i class="devicon-unity-plain"></i><p>Unity</p></div>
+      </div>
+      <div class="tech-fade" aria-hidden="true"></div>
     </div>
+  </section>
   </section>
 
   <section class="w3-container w3-margin-top">
     <h2>Selected Project</h2>
     <p><strong>Elo Matchmaking System</strong> — custom ELO algorithm using Apex Legends public APIs, with a React frontend for competitive matchmaking.</p>
-    <p>
-      <a class="w3-button w3-white w3-border" href="Jake Morales - Software Engineer.pdf" target="_blank">View Resume (PDF)</a>
-      <a class="w3-button w3-black w3-margin-left" href="https://github.com/JakeMorales" target="_blank">GitHub</a>
-      <a class="w3-button w3-border w3-margin-left" href="https://www.linkedin.com/in/jakeamorales" target="_blank">LinkedIn</a>
-    </p>
+  </section>
   </section>
 
   <footer class="w3-container w3-margin-top w3-small w3-text-grey">
     <p>Want different wording or to change links? Tell me and I'll update it.</p>
   </footer>
+  </div>
 </main>
+
+  <!-- Animated page border overlay -->
+  <svg class="page-frame" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <rect class="frame-rect" x="3" y="3" width="96" height="94" rx="3" ry="3"/>
+  </svg>
+
+  <script>
+    (function(){
+      // Mouse-driven horizontal scroll: maps mouse X to scroll position
+      const grids = document.querySelectorAll('.tech-grid');
+      grids.forEach(grid=>{
+        let rafId = null;
+        let target = null;
+
+        function updateFade(){
+          const fade = grid.parentElement.querySelector('.tech-fade');
+          const hasMore = grid.scrollWidth > grid.clientWidth + 1;
+          // show fade only when there is hidden content to the right
+          const show = hasMore && grid.scrollLeft < grid.scrollWidth - grid.clientWidth - 1;
+          if(fade){
+            fade.classList.toggle('visible', show);
+            grid.style.paddingRight = show ? (fade.offsetWidth + 'px') : '0px';
+          }
+        }
+
+        // initial
+        updateFade();
+        // update on resize and scroll
+        window.addEventListener('resize', updateFade);
+        grid.addEventListener('scroll', updateFade);
+
+        grid.addEventListener('mousemove', function(e){
+          // only respond when there is hidden content to the right
+          if(!(grid.scrollWidth > grid.clientWidth + 1)) return;
+          const rect = grid.getBoundingClientRect();
+          const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+          const pct = x / rect.width;
+          const max = Math.max(0, grid.scrollWidth - grid.clientWidth);
+          target = Math.round(max * pct);
+          if(!rafId) rafId = requestAnimationFrame(step);
+        });
+        grid.addEventListener('mouseleave', function(){ target = null; if(rafId){ cancelAnimationFrame(rafId); rafId = null; } });
+        function step(){
+          if(target === null){ rafId = null; return; }
+          const cur = grid.scrollLeft;
+          const delta = (target - cur) * 0.18;
+          if(Math.abs(delta) < 0.5){ grid.scrollLeft = target; target = null; rafId = null; return; }
+          grid.scrollLeft = cur + delta;
+          rafId = requestAnimationFrame(step);
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
