@@ -91,6 +91,10 @@
     /* Fade content in after border animation completes */
     .fade-in{opacity:0;animation:fadeIn .45s ease forwards .9s}
     @keyframes fadeIn{to{opacity:1}}
+
+    /* Scroll overlap: hero sticks behind; content-panel rises and covers it */
+    .hero{position:sticky;top:0;z-index:1}
+    .content-panel{position:relative;z-index:2;background:var(--bg);border-radius:16px 16px 0 0;box-shadow:0 -16px 48px rgba(0,0,0,0.55)}
   </style>
 </head>
 <body class="w3-light-grey">
@@ -123,7 +127,8 @@
     </div>
   </header>
 
-  <div class="site-body fade-in">
+  <div class="content-panel fade-in">
+  <div class="site-body">
   <section class="w3-container w3-margin-top">
     <h2>Skills & Technologies</h2>
     <div class="tech-wrap">
@@ -146,14 +151,44 @@
       <div class="tech-fade" aria-hidden="true"></div>
     </div>
   </section>
+
+  <section class="w3-container w3-margin-top">
+    <h2>Selected Projects</h2>
+    <div class="project">
+      <h3>VesaWeb</h3>
+      <p>VesaWeb is a modern web platform for the Virtual Esports Association, a competitive Apex Legends league and scrim server. Built with Angular 18, it provides real-time player statistics, match history, and league standings.</p>
+    </div>
+    <div class="project">
+      <h3>ScrimBot (Newt)</h3>
+      <p>ScrimBot (Newt) is a Discord bot for managing scrims and league operations, created with VESA Apex workflows in mind to automate scheduling, team assignments, and match reporting.</p>
+    </div>
+    <div class="project">
+      <h3>SpotifyRedux</h3>
+      <p>SpotifyRedux is an amateur Angular reimagining of Juxtopposed's Spotify redesign—an exploratory project focused on UI recreation and interaction patterns.</p>
+    </div>
+    <div class="project">
+      <h3>Elo Matchmaking System</h3>
+      <p><strong>Elo Matchmaking System</strong> — custom ELO algorithm using Apex Legends public APIs, with a React frontend for competitive matchmaking.</p>
+    </div>
   </section>
 
   <section class="w3-container w3-margin-top">
-    <h2>Selected Project</h2>
-    <p><strong>Elo Matchmaking System</strong> — custom ELO algorithm using Apex Legends public APIs, with a React frontend for competitive matchmaking.</p>
-  </section>
+    <h2>Design Influences</h2>
+    <p>I draw from product and editorial design leaders; below are the specific qualities I take from each and how they shape my approach.</p>
+    <ul>
+      <li><strong>Apple:</strong> System-driven clarity and refined motion. I favor clear hierarchy, typographic precision, and subtle transitions that communicate purpose and affordance. <a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank" rel="noopener">Apple HIG</a></li>
+      <li><strong>Spotify:</strong> Product-led empathy and expressive micro-interactions. I prioritize rhythm, discoverability, and personality in interfaces while keeping usability central. <a href="https://spotify.design/" target="_blank" rel="noopener">Spotify Design</a></li>
+      <li><strong>Oura:</strong> Minimalism and a calm, premium feel. I reduce visual noise, emphasize breathing room, and use restraint to communicate value and calm focus. <a href="https://ouraring.com/blog/horizon-design" target="_blank" rel="noopener">Oura — Horizon</a></li>
+      <li><strong>Stripe:</strong> Interactive clarity and modular UI. I design components that are composable, predictable, and explicit about state—making complex flows feel straightforward. <a href="https://stripe.com/docs/elements" target="_blank" rel="noopener">Stripe Elements</a>, <a href="https://stripe.com/blog/tags/design" target="_blank" rel="noopener">Stripe Design</a></li>
+      <li><strong>Linear:</strong> Dark, precise productivity aesthetics. I take cues for focused surfaces, concise information density, and tooling that feels fast and deterministic. <a href="https://linear.app/blog/design" target="_blank" rel="noopener">Linear — Design</a>, <a href="https://linear.app/blog/linear-2022" target="_blank" rel="noopener">Linear 2022</a></li>
+      <li><strong>New York Times:</strong> Editorial clarity and narrative flow. I structure content with clear hierarchy and rhythm so users can scan, consume, and retain information efficiently. <a href="https://open.nytimes.com/" target="_blank" rel="noopener">NYT Open</a>, <a href="https://open.nytimes.com/designing-at-the-speed-of-news-figma-config-2023-9b0c2f3c8b8e" target="_blank" rel="noopener">Designing at the Speed of News</a></li>
+      <li><strong>Vox Media:</strong> Bold visual storytelling and data-driven presentations. I apply striking visuals and clear data layouts to support stories without sacrificing legibility. <a href="https://product.voxmedia.com/" target="_blank" rel="noopener">Vox Product</a>, <a href="https://www.vox.com/features" target="_blank" rel="noopener">Vox Features</a></li>
+    </ul>
   </section>
 
+
+
+  </div>
   </div>
 </main>
 
@@ -163,17 +198,16 @@
   </svg>
 
   <script>
+    // Tech-grid: mouse-driven horizontal scroll + right-fade overlay
     (function(){
-      // Mouse-driven horizontal scroll: maps mouse X to scroll position
       const grids = document.querySelectorAll('.tech-grid');
-      grids.forEach(grid=>{
+      grids.forEach(function(grid){
         let rafId = null;
         let target = null;
 
         function updateFade(){
           const fade = grid.parentElement.querySelector('.tech-fade');
           const hasMore = grid.scrollWidth > grid.clientWidth + 1;
-          // show fade only when there is hidden content to the right
           const show = hasMore && grid.scrollLeft < grid.scrollWidth - grid.clientWidth - 1;
           if(fade){
             fade.classList.toggle('visible', show);
@@ -181,24 +215,25 @@
           }
         }
 
-        // initial
         updateFade();
-        // update on resize and scroll
         window.addEventListener('resize', updateFade);
         grid.addEventListener('scroll', updateFade);
 
         grid.addEventListener('mousemove', function(e){
-          // only respond when there is hidden content to the right
           if(!(grid.scrollWidth > grid.clientWidth + 1)) return;
           const rect = grid.getBoundingClientRect();
           const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
           const pct = x / rect.width;
           const max = Math.max(0, grid.scrollWidth - grid.clientWidth);
-          // map mouse position to scroll target smoothly (no hard snapping)
           target = Math.round(max * pct);
           if(!rafId) rafId = requestAnimationFrame(step);
         });
-        grid.addEventListener('mouseleave', function(){ target = null; if(rafId){ cancelAnimationFrame(rafId); rafId = null; } });
+
+        grid.addEventListener('mouseleave', function(){
+          target = null;
+          if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
+        });
+
         function step(){
           if(target === null){ rafId = null; return; }
           const cur = grid.scrollLeft;
@@ -208,6 +243,24 @@
           rafId = requestAnimationFrame(step);
         }
       });
+    })();
+
+    // Scroll-driven: hero gently fades and scales back as content panel rises over it
+    (function(){
+      const hero = document.querySelector('.hero');
+      if(!hero) return;
+      let raf = null;
+      function update(){
+        const y = window.scrollY || window.pageYOffset;
+        const heroH = hero.offsetHeight || window.innerHeight;
+        const progress = Math.min(1, y / heroH);
+        hero.style.opacity = String(1 - progress * 0.55);
+        hero.style.transform = 'scale(' + (1 - progress * 0.03) + ')';
+        raf = null;
+      }
+      function onScroll(){ if(raf) return; raf = requestAnimationFrame(update); }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      update();
     })();
   </script>
 
